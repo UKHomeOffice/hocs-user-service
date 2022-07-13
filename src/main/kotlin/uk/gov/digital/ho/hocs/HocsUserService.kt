@@ -7,5 +7,6 @@ import org.springframework.boot.runApplication
 class HocsUserService
 
 fun main(args: Array<String>) {
-	runApplication<HocsUserService>(*args)
+    // LOL
+    runApplication<HocsUserService>(*args)
 }

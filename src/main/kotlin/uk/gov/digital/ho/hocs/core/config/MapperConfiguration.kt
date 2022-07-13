@@ -1,6 +1,5 @@
 package uk.gov.digital.ho.hocs.core.config
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -9,6 +8,5 @@ import org.springframework.context.annotation.Configuration
 class MapperConfiguration {
 
     @Bean
-    fun objectMapper(): ObjectMapper = jacksonObjectMapper()
-
+    fun objectMapper() = jacksonObjectMapper()
 }

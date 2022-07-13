@@ -13,8 +13,9 @@ import uk.gov.digital.ho.hocs.services.user.User
 @Repository
 class TeamRepository(
     keycloak: Keycloak,
-    @Value("\${keycloak.realm}") private val realm: String)
-    : KeycloakRepository() {
+    @Value("\${keycloak.realm}") private val realm: String
+) :
+    KeycloakRepository() {
 
     private final val keycloakRealm: RealmResource = keycloak.realm(realm)
     val groupsResource: GroupsResource = keycloakRealm.groups()
@@ -32,7 +33,6 @@ class TeamRepository(
             groupResource.members(0, -1)
                 .map { User(it) }
 
-        return Team(groupResource.toRepresentation(), groupUsers)
+        return Team.from(groupResource.toRepresentation(), groupUsers)
     }
-
 }

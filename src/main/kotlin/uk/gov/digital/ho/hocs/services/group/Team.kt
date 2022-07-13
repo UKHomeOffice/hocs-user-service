@@ -1,32 +1,34 @@
 package uk.gov.digital.ho.hocs.services.group
 
-import com.fasterxml.jackson.annotation.JsonCreator
+import org.apache.commons.codec.binary.Base64
 import org.keycloak.representations.idm.GroupRepresentation
 import uk.gov.digital.ho.hocs.services.user.User
+import java.nio.ByteBuffer
+import java.util.UUID
 
 data class Team(
-    var id: String?,
-    val name: String?,
-    var users: List<User>
+    var id: String? = null,
+    val name: UUID,
+    var users: List<User> = emptyList()
 ) {
-    constructor(
-        name: String,
-    ) :
-            this(id = null, name = name, users = listOf())
-    constructor(
-        groupRepresentation: GroupRepresentation,
-        users: List<User>
-    ) :
-            this(id = groupRepresentation.id, name = groupRepresentation.name, users = users)
 
-    @JsonCreator
-    private constructor() : this(id = null, name = null, users = listOf())
+    companion object {
+        fun uuidToBase64String(uuid: UUID): String {
+            val uuidBytes = ByteBuffer.wrap(ByteArray(16))
+            uuidBytes.putLong(uuid.mostSignificantBits)
+            uuidBytes.putLong(uuid.leastSignificantBits)
+            return Base64.encodeBase64URLSafeString(uuidBytes.array())
+        }
 
-    fun toGroupRepresentation(): GroupRepresentation {
-        val newGroup = GroupRepresentation()
+        private fun base64StringToUUID(base64UUIDString: String): UUID =
+            Base64.decodeBase64(base64UUIDString)
+                .let { ByteBuffer.wrap(it) }
+                .let { UUID(it.long, it.long) }
 
-        newGroup.name = name
-
-        return newGroup
+        fun from(groupRepresentation: GroupRepresentation, users: List<User>) =
+            Team(id = groupRepresentation.id, name = base64StringToUUID(groupRepresentation.name), users = users)
     }
+
+    fun toGroupRepresentation() =
+        GroupRepresentation().also { it.name = uuidToBase64String(name) }
 }

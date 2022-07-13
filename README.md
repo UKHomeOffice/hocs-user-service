@@ -8,7 +8,7 @@ This is the Home Office Correspondence Systems (HOCS) user service. The service 
 
 ### Versioning
 
-For versioning this project uses SemVer.
+For versioning this project uses [SemVer](https://semver.org/).
 
 ### Authors
 

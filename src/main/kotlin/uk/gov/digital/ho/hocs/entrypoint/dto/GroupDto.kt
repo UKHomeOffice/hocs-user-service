@@ -1,3 +1,5 @@
 package uk.gov.digital.ho.hocs.entrypoint.dto
 
-data class GroupDto(val id: String)
+import java.util.UUID
+
+data class GroupDto(val id: UUID)

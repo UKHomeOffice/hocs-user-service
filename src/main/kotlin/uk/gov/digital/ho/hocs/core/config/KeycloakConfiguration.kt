@@ -16,7 +16,8 @@ class KeycloakConfiguration(
     @Value("\${keycloak.auth-server-url}")
     private val authUrl: String,
     @Value("\${keycloak.realm}")
-    private val realm: String) {
+    private val realm: String
+) {
 
     @Bean
     fun keycloakClient(): Keycloak =
@@ -27,5 +28,4 @@ class KeycloakConfiguration(
             .clientId(clientId)
             .clientSecret(secretKey)
             .build()
-
 }

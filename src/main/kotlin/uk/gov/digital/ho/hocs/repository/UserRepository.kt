@@ -9,34 +9,19 @@ import org.springframework.stereotype.Repository
 @Repository
 class UserRepository(
     keycloak: Keycloak,
-    @Value("\${keycloak.realm}") private val realm: String)
-    : KeycloakRepository() {
+    @Value("\${keycloak.realm}") private val realm: String
+) :
+    KeycloakRepository() {
 
-        val keycloakUserResource: UsersResource = keycloak.realm(realm).users()
+    val keycloakUserResource: UsersResource = keycloak.realm(realm).users()
 
-        fun createUser(user: UserRepresentation) : String =
-            handleKeycloakRequest { keycloakUserResource.create(user) } as String
+    fun createUser(user: UserRepresentation): String =
+        handleKeycloakRequest { keycloakUserResource.create(user) } as String
 
-        fun deleteUser(userId: String) {
-            handleKeycloakRequest { keycloakUserResource.delete(userId) }
-        }
-
-        fun getAllUsers() : List<UserRepresentation> =
-            keycloakUserResource.list(0, -1)
-
-    fun getAllUsersPaginated() : List<UserRepresentation> {
-        val totalUserCount = keycloakUserResource.count()
-        val users: ArrayList<UserRepresentation> = arrayListOf()
-
-        var i = 0
-        while (i < totalUserCount) {
-            users.addAll(
-                keycloakUserResource.list(i, BATCH_SIZE)
-            )
-            i += BATCH_SIZE
-        }
-
-        return users
+    fun deleteUser(userId: String) {
+        handleKeycloakRequest { keycloakUserResource.delete(userId) }
     }
 
+    fun getAllUsers(): List<UserRepresentation> =
+        keycloakUserResource.list(0, -1)
 }

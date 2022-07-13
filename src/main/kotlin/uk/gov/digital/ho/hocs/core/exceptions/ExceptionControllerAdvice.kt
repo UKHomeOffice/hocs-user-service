@@ -9,10 +9,9 @@ class ExceptionControllerAdvice {
 
     @ExceptionHandler
     fun handleUserNotFoundException(ex: UserNotFoundException): ResponseEntity<Void> =
-         ResponseEntity.notFound().build()
+        ResponseEntity.notFound().build()
 
     @ExceptionHandler
     fun handleTeamNotFoundException(ex: TeamNotFoundException): ResponseEntity<Void> =
         ResponseEntity.notFound().build()
-
 }

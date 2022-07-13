@@ -5,18 +5,15 @@ import javax.ws.rs.core.Response
 
 open class KeycloakRepository {
 
-    protected val BATCH_SIZE = 100
-
-    protected fun handleKeycloakRequest(keycloakFunction: () -> Response): Any {
-        val response = keycloakFunction()
-
-        when (response.statusInfo) {
-            Response.Status.CREATED -> {
-                return CreatedResponseUtil.getCreatedId(response)
+    protected fun handleKeycloakRequest(keycloakFunction: () -> Response): Any? =
+        keycloakFunction().let {
+            return when (it.statusInfo) {
+                Response.Status.CREATED -> {
+                    CreatedResponseUtil.getCreatedId(it)
+                }
+                else -> {
+                    null
+                }
             }
         }
-
-        return "test"
-    }
-
 }
