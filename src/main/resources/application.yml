@@ -1,6 +1,6 @@
 keycloak:
-    realm:
-    resource:
+    realm: master
+    resource: hocs-user-service-account
     auth-server-url: http://localhost:8081/auth
     credentials:
-        secret:
+        secret: G03FuPR8H19sRjjHV4Zzz8NEwcX0leTk
