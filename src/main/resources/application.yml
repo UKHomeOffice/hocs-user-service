@@ -1,0 +1,6 @@
+keycloak:
+    realm:
+    resource:
+    auth-server-url: http://localhost:8081/auth
+    credentials:
+        secret:
